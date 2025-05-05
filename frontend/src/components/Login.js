@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Box, Typography, TextField, Button, Alert } from '@mui/material';
-import axios from 'axios';
+import { loginUser, getUsuarios } from '../services/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -11,8 +11,16 @@ export default function Login() {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('http://localhost:8080/api/auth/login', { email, password });
+      const res = await loginUser({ email, password });
       localStorage.setItem('token', res.data.token);
+
+      // Obtener el usuario para guardar el rol
+      const usuarios = await getUsuarios();
+      const usuario = usuarios.data.find(u => u.email === email);
+      if (usuario) {
+        localStorage.setItem('rol', usuario.rol);
+      }
+
       window.location.href = '/';
     } catch (err) {
       setError('Credenciales incorrectas');

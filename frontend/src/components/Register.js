@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Box, Typography, TextField, Button, Alert } from '@mui/material';
-import axios from 'axios';
+import { registerUser } from '../services/api';
 
 export default function Register() {
   const [nombre, setNombre] = useState('');
@@ -14,7 +14,7 @@ export default function Register() {
     setError('');
     setMensaje('');
     try {
-      await axios.post('http://localhost:8080/api/auth/registro', {
+      await registerUser({
         nombre,
         email,
         password,

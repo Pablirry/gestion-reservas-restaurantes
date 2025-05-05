@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class UsuarioController {
 
     private final UsuarioService servicio;

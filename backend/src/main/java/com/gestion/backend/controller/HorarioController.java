@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/horarios")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class HorarioController {
 
     private final HorarioService servicio;

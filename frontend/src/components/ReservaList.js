@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Grid, Card, CardContent, CircularProgress, Alert } from '@mui/material';
-import axios from 'axios';
+import { getReservas } from '../services/api';
 
 export default function ReservaList() {
   const [reservas, setReservas] = useState([]);
@@ -8,7 +8,7 @@ export default function ReservaList() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/reservas')
+    getReservas()
       .then(res => {
         setReservas(res.data);
         setLoading(false);

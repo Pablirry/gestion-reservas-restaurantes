@@ -14,6 +14,9 @@ public class Mesa {
 
     private Integer capacidad;
 
+    public Mesa() {
+    }
+
     // Getters y Setters
 
     public Long getId() {

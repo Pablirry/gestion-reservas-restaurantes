@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, TextField, Button, MenuItem, Alert, Box } from '@mui/material';
-import axios from 'axios';
+import { getUsuarios, getMesas, getHorarios, createReserva } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 export default function ReservaForm() {
   const [usuarios, setUsuarios] = useState([]);
@@ -15,30 +16,32 @@ export default function ReservaForm() {
   });
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/usuarios').then(res => setUsuarios(res.data));
-    axios.get('http://localhost:8080/api/mesas').then(res => setMesas(res.data));
-    axios.get('http://localhost:8080/api/horarios').then(res => setHorarios(res.data));
+    getUsuarios().then(res => setUsuarios(res.data));
+    getMesas().then(res => setMesas(res.data));
+    getHorarios().then(res => setHorarios(res.data));
   }, []);
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMensaje('');
     setError('');
     try {
-      await axios.post('http://localhost:8080/api/reservas', {
-        usuario: { id: form.usuarioId },
-        mesa: { id: form.mesaId },
-        horario: { id: form.horarioId },
-        cantidadPersonas: form.cantidadPersonas,
+      await createReserva({
+        usuario: { id: parseInt(form.usuarioId, 10) },
+        mesa: { id: parseInt(form.mesaId, 10) },
+        horario: { id: parseInt(form.horarioId, 10) },
+        cantidadPersonas: parseInt(form.cantidadPersonas, 10),
         comentario: form.comentario
       });
       setMensaje('Reserva creada correctamente');
+      setTimeout(() => navigate('/'), 1000);
     } catch {
       setError('Error al crear la reserva');
     }

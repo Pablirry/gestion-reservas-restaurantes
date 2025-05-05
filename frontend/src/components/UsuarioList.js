@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Grid, Card, CardContent, CircularProgress, Alert } from '@mui/material';
-import axios from 'axios';
+import { getUsuarios } from '../services/api';
 
 export default function UsuarioList() {
   const [usuarios, setUsuarios] = useState([]);
@@ -8,7 +8,7 @@ export default function UsuarioList() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/usuarios')
+    getUsuarios()
       .then(res => {
         setUsuarios(res.data);
         setLoading(false);

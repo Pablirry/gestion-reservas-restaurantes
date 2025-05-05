@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/mesas")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class MesaController {
 
     private final MesaService servicio;
@@ -29,7 +29,7 @@ public class MesaController {
     }
 
     @PostMapping
-    public Mesa crear(@RequestBody Mesa mesa) {
+    public Mesa crearMesa(@RequestBody Mesa mesa) {
         return servicio.guardar(mesa);
     }
 

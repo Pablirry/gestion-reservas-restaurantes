@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Grid, Card, CardContent, CircularProgress, Alert } from '@mui/material';
-import axios from 'axios';
+import { getHorarios } from '../services/api';
 
 export default function HorarioList() {
   const [horarios, setHorarios] = useState([]);
@@ -8,7 +8,7 @@ export default function HorarioList() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/horarios')
+    getHorarios()
       .then(res => {
         setHorarios(res.data);
         setLoading(false);

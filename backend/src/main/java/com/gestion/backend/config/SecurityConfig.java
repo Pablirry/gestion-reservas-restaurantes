@@ -8,7 +8,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.gestion.backend.service.JwtRequestFilter;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -22,10 +21,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-            .authorizeRequests()
-            .requestMatchers("/api/auth/**").permitAll()  // Permitir acceso a /api/auth (login y registro)
-            .anyRequest().authenticated()
-            .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .authorizeRequests()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/**").permitAll()
+                .anyRequest().authenticated()
+                .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

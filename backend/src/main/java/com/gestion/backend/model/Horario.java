@@ -1,7 +1,7 @@
 package com.gestion.backend.model;
 
 import jakarta.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,12 +13,13 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
-    @Column(name = "hora_inicio")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime horaInicio;
 
-    @Column(name = "hora_fin")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime horaFin;
 
     // Getters y Setters
